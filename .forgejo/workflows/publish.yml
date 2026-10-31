@@ -1,0 +1,84 @@
+# TODO: authorized integrations
+name: create release dist
+on:
+  push:
+    tags:
+      - "v*"
+jobs:
+  release:
+    runs-on: [gpg, native-x86_64-linux]
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-home@24f381c90fb24e9f090418dbce83d326b014f4ef # v1
+        with:
+          gpg-privkey: ${{ secrets.GPG_PRIVKEY }}
+          gpg-key-id: ${{ vars.GPG_KEY_ID }}
+      - name: build
+        run: |
+          nix build .#
+          echo "RESULT=$(readlink -f result)" >> "$GITHUB_ENV"
+      - name: check version
+        run: |
+          version="$(nix eval --raw ".#default.version")"
+          echo "VERSION=$version" >> "$GITHUB_ENV"
+
+          if [ "$FORGEJO_REF_NAME" != "v$version" ]; then
+            echo "Tag does not match package version"
+            exit 1
+          fi
+      - name: create archive
+        run: |
+          mkdir -p dist/release
+          cp -rL --no-preserve all result/* dist/
+          pushd dist
+          zip -x release/ -X -r release/${FORGEJO_REPOSITORY##*/}-${FORGEJO_REF_NAME}.zip .
+          popd
+      - name: create release
+        uses: bart/forgejo-release@74bd5d3064257c896a1499ddcf18ac1161189d47 # v2
+        with:
+          direction: upload
+          gpg-private-key: ${{ secrets.GPG_PRIVKEY }}
+      - name: configure maven credentials
+        env:
+          USERNAME: ${{ vars.PACKAGE_USERNAME }}
+          TOKEN: ${{ secrets.PACKAGE_TOKEN }}
+        run: |
+          mkdir -p "$HOME/.m2"
+
+          cat > "$HOME/.m2/settings.xml" <<EOF
+          <settings>
+            <servers>
+              <server>
+                <id>forgejo</id>
+                <username>${USERNAME}</username>
+                <password>${TOKEN}</password>
+              </server>
+            </servers>
+          </settings>
+          EOF
+      - name: Publish parent POM
+        run: |
+          POM="$RESULT/share/maven-repository/org/brotli/parent/$VERSION/parent-$VERSION.pom"
+
+          nix develop -c mvn \
+            org.apache.maven.plugins:maven-deploy-plugin:3.1.4:deploy-file \
+            -DrepositoryId=forgejo \
+            -Durl="${{ forge.server_url }}/api/packages/${{ github.repository_owner }}/maven" \
+            -Dfile="$POM" \
+            -DpomFile="$POM" \
+            -Dpackaging=pom
+      - name: Publish decoder
+        env:
+          REGISTRY_URL: ${{ vars.FORGEJO_MAVEN_URL }}
+        run: |
+          DIR="$RESULT/share/maven-repository/org/brotli/dec/$VERSION"
+
+          nix develop -c mvn \
+            org.apache.maven.plugins:maven-deploy-plugin:3.1.4:deploy-file \
+            -DrepositoryId=forgejo \
+            -Durl="${{ forge.server_url }}/api/packages/${{ github.repository_owner }}/maven" \
+            -Dfile="$DIR/org.brotli.dec-$VERSION.jar" \
+            -DpomFile="$DIR/org.brotli.dec-$VERSION.pom" \
+            -DgeneratePom=false
