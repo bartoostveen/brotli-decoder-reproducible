@@ -40,7 +40,7 @@
               pkgs.maven
               (pkgs.writeShellScriptBin "tag-release" ''
                 version="$(nix eval --raw ".#default.version")"
-                git tag -m "Release $version" "v$version"
+                git tag -m "Release $version" "v$version" "$@"
               '')
             ];
           };
