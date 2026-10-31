@@ -63,6 +63,7 @@ jobs:
           POM="$RESULT/share/maven-repository/org/brotli/parent/$VERSION/parent-$VERSION.pom"
 
           nix develop -c mvn \
+            --settings "$HOME/.m2/settings.xml" \
             org.apache.maven.plugins:maven-deploy-plugin:3.1.4:deploy-file \
             -Dmaven.repo.local=$HOME/.m2/repository \
             -DrepositoryId=forgejo \
@@ -75,6 +76,7 @@ jobs:
           DIR="$RESULT/share/maven-repository/org/brotli/dec/$VERSION"
 
           nix develop -c mvn \
+            --settings "$HOME/.m2/settings.xml" \
             org.apache.maven.plugins:maven-deploy-plugin:3.1.4:deploy-file \
             -Dmaven.repo.local=$HOME/.m2/repository \
             -DrepositoryId=forgejo \
