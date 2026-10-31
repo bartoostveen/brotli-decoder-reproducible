@@ -1,5 +1,8 @@
 # Reproducible builds for Brotli decoder
 
+![Latest release](https://git.bartoostveen.nl/bart/brotli-decoder-reproducible/badges/workflows/publish.yml/badge.svg?label=Latest%20release&style=for-the-badge)
+![Latest version](https://git.bartoostveen.nl/bart/brotli-decoder-reproducible/badges/release.svg?style=for-the-badge)
+
 Since <https://github.com/google/brotli/tree/master/java> is still maintained, but not published to Maven Central anymore, I figured there'd be no harm in making a reproducible build for it and publishing it to my own registry.
 
 ## How to use
@@ -42,7 +45,7 @@ Then, add the following in your `<dependencies>` block:
 
 The version in the example above is likely to be out of date, so replace it with the following version to use the latest:
 
-![Latest version](https://git.bartoostveen.nl/bart/brotli-decoder-reproducible/badges/release.svg)
+![Latest version](https://git.bartoostveen.nl/bart/brotli-decoder-reproducible/badges/release.svg?style=for-the-badge)
 </details>
 
 <details open>
@@ -73,7 +76,7 @@ brotli = { module = "org.brotli:dec", version = "1.2.1-unstable-2026-10-28" }
 
 The version in the example above is likely to be out of date, so replace it with the following version to use the latest:
 
-![Latest version](https://git.bartoostveen.nl/bart/brotli-decoder-reproducible/badges/release.svg)
+![Latest version](https://git.bartoostveen.nl/bart/brotli-decoder-reproducible/badges/release.svg?style=for-the-badge)
 
 </summary>
 
