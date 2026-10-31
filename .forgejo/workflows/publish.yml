@@ -6,7 +6,7 @@ on:
       - "v*"
 jobs:
   release:
-    runs-on: [gpg, native-x86_64-linux]
+    runs-on: [bigger-parallel, native-x86_64-linux]
     permissions:
       contents: write
     steps:
