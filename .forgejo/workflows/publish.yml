@@ -64,6 +64,7 @@ jobs:
 
           nix develop -c mvn \
             org.apache.maven.plugins:maven-deploy-plugin:3.1.4:deploy-file \
+            -Dmaven.repo.local=$HOME/.m2/repository \
             -DrepositoryId=forgejo \
             -Durl="${{ forge.server_url }}/api/packages/${{ github.repository_owner }}/maven" \
             -Dfile="$POM" \
@@ -75,6 +76,7 @@ jobs:
 
           nix develop -c mvn \
             org.apache.maven.plugins:maven-deploy-plugin:3.1.4:deploy-file \
+            -Dmaven.repo.local=$HOME/.m2/repository \
             -DrepositoryId=forgejo \
             -Durl="${{ forge.server_url }}/api/packages/${{ github.repository_owner }}/maven" \
             -Dfile="$DIR/org.brotli.dec-$VERSION.jar" \
