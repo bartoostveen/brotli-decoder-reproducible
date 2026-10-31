@@ -70,8 +70,6 @@ jobs:
             -DpomFile="$POM" \
             -Dpackaging=pom
       - name: Publish decoder
-        env:
-          REGISTRY_URL: ${{ vars.FORGEJO_MAVEN_URL }}
         run: |
           DIR="$RESULT/share/maven-repository/org/brotli/dec/$VERSION"
 
