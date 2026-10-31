@@ -23,14 +23,17 @@
       ];
 
       perSystem =
-        { pkgs, ... }:
+        { pkgs, self', ... }:
 
         {
           treefmt = {
             programs.nixfmt.enable = true;
           };
 
-          packages.default = pkgs.callPackage ./package.nix { };
+          packages = {
+            default = pkgs.callPackage ./package.nix { };
+            brotli-dec = self'.packages.default;
+          };
 
           devShells.default = pkgs.mkShell {
             packages = [

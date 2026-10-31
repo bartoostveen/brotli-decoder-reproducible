@@ -21,8 +21,8 @@ jobs:
 
           git checkout -B "$head" "origin/$base" || git checkout -b "$head"
 
-          old_version=$(nix eval --raw ".#default.version")
-          nix run --inputs-from . nixpkgs#nix-update -- -F default --commit
+          old_version=$(nix eval --raw ".#brotli-dec.version")
+          nix run --inputs-from . nixpkgs#nix-update -- -F brotli-dec --commit --version=branch=main
 
           if [[ "$(git rev-list origin/"$base"..HEAD --count)" -ne 1 ]]; then
             echo "No changes for ${{ matrix.attrPath }}"
@@ -45,8 +45,8 @@ jobs:
           title="$(git log -1 --pretty=%s)"
           commit_body="$(git log -1 --pretty=%b)"
 
-          new_version=$(nix eval --raw ".#default.version")
-          body="Automated version bump for **brotli** from \`$old_version\` to \`$new_version\` using \`passthru.updateScript\`."
+          new_version=$(nix eval --raw ".#brotli-dec.version")
+          body="Automated version bump for **brotli-dec** from \`$old_version\` to \`$new_version\` using \`passthru.updateScript\`."
 
           if [[ -n "$commit_body" ]]; then
             body="$(printf '%s\n\n```\n%s\n```' "$body" "$commit_body")"

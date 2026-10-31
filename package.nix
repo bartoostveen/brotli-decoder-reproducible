@@ -7,7 +7,7 @@
 
 maven.buildMavenPackage (finalAttrs: {
   pname = "brotli-dec";
-  version = "1.2.1";
+  version = "1.2.1-unstable-2026-10-28";
 
   __structuredAttrs = true;
   strictDeps = true;
@@ -15,8 +15,8 @@ maven.buildMavenPackage (finalAttrs: {
   src = fetchFromGitHub {
     owner = "google";
     repo = "brotli";
-    tag = "v${finalAttrs.version}";
-    hash = "sha256-zAIdU3OjFa7+6AyC/3BGm2iFeBHRf9zkTWSmjtMJtIk=";
+    rev = "d89c4b1c52e25ddafe047bc78bbee5c1e24b1809";
+    hash = "sha256-Gp0KbNwQ1qyt0FwyS4CJPi6zg/OAbIIQR5ZHFhJSw/c=";
     # Workaround for incorrect .gitattributes
     leaveDotGit = true;
   };
@@ -68,7 +68,7 @@ maven.buildMavenPackage (finalAttrs: {
     runHook postInstall
   '';
 
-  passthru.updateScript = nix-update-script { };
+  passthru.updateScript = nix-update-script { extraArgs = [ "--version=branch=main" ]; };
 
   meta = {
     description = "Brotli compression format";
