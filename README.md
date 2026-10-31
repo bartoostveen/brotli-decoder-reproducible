@@ -42,7 +42,7 @@ Then, add the following in your `<dependencies>` block:
 
 The version in the example above is likely to be out of date, so replace it with the following version to use the latest:
 
-![Latest version](/badges/release.svg)
+![Latest version](https://git.bartoostveen.nl/bart/brotli-decoder-reproducible/badges/release.svg)
 </details>
 
 <details open>
@@ -73,7 +73,7 @@ brotli = { module = "org.brotli:dec", version = "1.2.1-unstable-2026-10-28" }
 
 The version in the example above is likely to be out of date, so replace it with the following version to use the latest:
 
-![Latest version](/badges/release.svg)
+![Latest version](https://git.bartoostveen.nl/bart/brotli-decoder-reproducible/badges/release.svg)
 
 </summary>
 
