@@ -80,6 +80,15 @@ The version in the example above is likely to be out of date, so replace it with
 
 </summary>
 
+<summary>
+<detail>Usage with ProGuard</detail>
+
+```
+-keep class org.brotli.dec.DictionaryData
+-keepnames class org.brotli.dec.Dictionary
+```
+</detail>
+
 ## License
 
 All released code here is not licensed, as these are merely some build scripts. Refer to the upstream license: [MIT License](https://github.com/google/brotli/blob/master/LICENSE).
