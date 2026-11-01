@@ -80,14 +80,14 @@ The version in the example above is likely to be out of date, so replace it with
 
 </summary>
 
-<summary>
-<detail>Usage with ProGuard</detail>
+<details>
+<summary>Usage with ProGuard</summary>
 
 ```
 -keep class org.brotli.dec.DictionaryData
 -keepnames class org.brotli.dec.Dictionary
 ```
-</detail>
+</details>
 
 ## License
 
