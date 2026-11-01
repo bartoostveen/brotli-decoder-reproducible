@@ -22,7 +22,7 @@ jobs:
           git checkout -B "$head" "origin/$base" || git checkout -b "$head"
 
           old_version=$(nix eval --raw ".#brotli-dec.version")
-          nix run --inputs-from . nixpkgs#nix-update -- -F brotli-dec --commit --version=branch=main
+          nix run --inputs-from . nixpkgs#nix-update -- -F brotli-dec --commit --version=branch=master
 
           if [[ "$(git rev-list origin/"$base"..HEAD --count)" -ne 1 ]]; then
             echo "No changes for ${{ matrix.attrPath }}"
