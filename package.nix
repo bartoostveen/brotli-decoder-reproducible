@@ -7,7 +7,7 @@
 
 maven.buildMavenPackage (finalAttrs: {
   pname = "brotli-dec";
-  version = "1.2.1-unstable-2026-11-18";
+  version = "1.2.1-unstable-2026-11-20";
 
   __structuredAttrs = true;
   strictDeps = true;
@@ -15,8 +15,8 @@ maven.buildMavenPackage (finalAttrs: {
   src = fetchFromGitHub {
     owner = "google";
     repo = "brotli";
-    rev = "5516943f69130987002357bb0dd3764ce7c9670b";
-    hash = "sha256-xWh6s9NM5vu4fAaFwtZxeNYLHq6uJUQPOQByNmg//ss=";
+    rev = "fed075f48eaffa447243a8e0452a88b103506118";
+    hash = "sha256-4a7mL10IT7rnUousOu5iWddUvkwL6bJHKMjleBArLao=";
     # Workaround for incorrect .gitattributes
     leaveDotGit = true;
   };
