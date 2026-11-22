@@ -23,9 +23,24 @@
       ];
 
       perSystem =
-        { pkgs, self', ... }:
+        {
+          system,
+          pkgs,
+          self',
+          ...
+        }:
 
         {
+          _module.args.pkgs = import inputs.nixpkgs {
+            inherit system;
+            overlays = [
+              (final: _prev: {
+                jdk = final.jdk21;
+                jdk_headless = final.jdk21_headless;
+              })
+            ];
+          };
+
           treefmt = {
             programs.nixfmt.enable = true;
           };
@@ -38,7 +53,7 @@
           devShells.default = pkgs.mkShell {
             packages = [
               pkgs.curl
-              pkgs.jdk17
+              pkgs.jdk
               pkgs.jq
               pkgs.maven
               (pkgs.writeShellScriptBin "tag-release" ''
